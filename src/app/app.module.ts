@@ -19,7 +19,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import {NgxsModule} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
-import {TodoState} from 'src/app/todo/todo.state';
+import {ShoppingListState} from 'src/app/store/shopping-list/shopping-list.state';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import {TodoState} from 'src/app/todo/todo.state';
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([TodoState]),
+    NgxsModule.forRoot([ShoppingListState]),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot()
   ],

@@ -1,10 +1,16 @@
-<app-header (featureSelected)="onNavigate($event)"></app-header>
+<app-header (featureSelected)="onNavigate($event)" *ngIf="!loading"></app-header>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="!loading"></router-outlet>
+      <h1 *ngIf="loading">Loading</h1>
+<!--      <h1 *ngIf="loading">sss</h1>-->
+<!--      <div class="spinner-border text-primary" role="status">-->
+<!--        <span class="sr-only">Loading...</span>-->
+<!--      </div>-->
 <!--      <app-recipes *ngIf="loadedFeature === 'recipe'"></app-recipes>-->
 <!--      <app-shopping-list *ngIf="loadedFeature !== 'recipe'"></app-shopping-list>-->
+
     </div>
   </div>
 </div>

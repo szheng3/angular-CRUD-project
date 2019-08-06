@@ -6,7 +6,7 @@
       <a
         class="list-group-item"
         style="cursor: pointer"
-        *ngFor="let ingredient of ingredients;index as i"
+        *ngFor="let ingredient of ingredients$ | async;index as i"
         [routerLink]="[i]"
       >
         {{ ingredient.name }} ({{ ingredient.amount }})
