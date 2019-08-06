@@ -1,0 +1,26 @@
+<form [formGroup]="form"  (ngSubmit)="save()">
+
+  <div class="form-group">
+    <label for="name"></label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="name" formControlName="name">
+  </div>
+
+  <div class="form-group">
+    <label for="description"></label>
+    <input type="text" class="form-control" name="name" id="description" placeholder="description" formControlName="description">
+  </div>
+  <div class="form-group">
+    <label for="imagePath"></label>
+    <input type="text" class="form-control" name="name" id="imagePath" placeholder="imagePath" formControlName="imagePath">
+  </div>
+
+<!--  <div class="form-group">-->
+<!--    <label for="imagePath"></label>-->
+<!--    <input type="text" class="form-control" name="name" id="imagePath" placeholder="imagePath" formControlName="imagePath">-->
+<!--  </div>-->
+
+
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="click" class="btn btn-danger" [routerLink]="['../']">cancel</button>
+</form>

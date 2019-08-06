@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-xs-10">
+    <router-outlet></router-outlet>
+    <hr>
+    <ul class="list-group">
+      <a
+        class="list-group-item"
+        style="cursor: pointer"
+        *ngFor="let ingredient of ingredients;index as i"
+        [routerLink]="[i]"
+      >
+        {{ ingredient.name }} ({{ ingredient.amount }})
+      </a>
+    </ul>
+  </div>
+</div>
