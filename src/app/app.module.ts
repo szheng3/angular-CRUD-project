@@ -20,6 +20,7 @@ import {NgxsModule} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {ShoppingListState} from 'src/app/store/shopping-list/shopping-list.state';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {ShoppingListState} from 'src/app/store/shopping-list/shopping-list.state
     ShoppingEditComponent,
     DropdownDirective,
     EmptyComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
