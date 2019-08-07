@@ -52,7 +52,7 @@ export class ShoppingListState {
   @Action(DeleteShoppingListAction)
   public delete(ctx: StateContext<ShoppingListStateModel>, {index}: UpdateShoppingListAction) {
     const stateModel = ctx.getState();
-    const value = stateModel.items.filter((value, index1) => {if (index1 !== index) {return value; }});
+    const value = stateModel.items.filter((ingredient, index1) => {if (index1 !== index) {return ingredient; }});
     ctx.patchState({
       items: [
         ...value,

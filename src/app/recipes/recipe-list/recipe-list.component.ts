@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 
 import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
+import {Select} from '@ngxs/store';
+import {RecipesState} from 'src/app/store/recipes/recipes.state';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,15 +12,11 @@ import {RecipeService} from '../recipe.service';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  recipes: Recipe[];
+  @Select(RecipesState.getRecipes)recipes$: Observable<Recipe[]>;
 
   constructor(private recipeService: RecipeService) {
   }
 
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
-    this.recipeService.recipesEvent.asObservable().subscribe(value => {
-      this.recipes = value;
-    });
   }
 }
