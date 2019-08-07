@@ -6,7 +6,7 @@ import {defaultIfEmpty, delay, map, tap} from 'rxjs/operators';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 import {Observable, of, range, Subject} from 'rxjs';
 import {Store} from '@ngxs/store';
-import {ShoppingListAction} from 'src/app/store/shopping-list/shopping-list.actions';
+import {ShoppingListAction, UpdateShoppingListAction} from 'src/app/store/shopping-list/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -50,7 +50,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       // this.slService.addIngredient(inputForm);
 
     } else {
-      this.slService.updateIngredient(this.index, inputForm);
+      this.store.dispatch(new UpdateShoppingListAction(inputForm, this.index));
     }
   }
 

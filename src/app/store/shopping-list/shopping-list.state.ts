@@ -30,15 +30,14 @@ export class ShoppingListState {
     ctx.setState({...stateModel});
   }
 
-
   @Action(UpdateShoppingListAction)
-  public update(ctx: StateContext<ShoppingListStateModel>, {payload}: ShoppingListAction) {
+  public update(ctx: StateContext<ShoppingListStateModel>, {payload, index}: UpdateShoppingListAction) {
     const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, payload];
+    stateModel.items[index] = payload;
     ctx.patchState({
       items: [
-        ...ctx.getState().items,
-              ]
+        ...stateModel.items,
+      ],
     });
 
   }
