@@ -13,7 +13,7 @@ import {of} from 'rxjs';
 export class RecipeEditComponent implements OnInit {
   private recipe = new Recipe('', '', '', []);
   private isEdit = true;
-  private form = new FormGroup({});
+   form = new FormGroup({});
   private index: number;
 
   constructor(private fb: FormBuilder, private recipeService: RecipeService, private activatedRoute: ActivatedRoute) { }

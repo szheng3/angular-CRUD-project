@@ -38,7 +38,7 @@ import { LoadingComponent } from './loading/loading.component';
     LoadingComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
