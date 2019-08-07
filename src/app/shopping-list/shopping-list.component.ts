@@ -14,23 +14,12 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients$: Observable<Ingredient[]>;
+ @Select(ShoppingListState.getShoppingList)ingredients$: Observable<Ingredient[]>;
 
-  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute, private store: Store) { }
+  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    // this.ingredients$ = this.store.select(ShoppingListState.getShoppingList);
-    this.ingredients$ = this.activatedRoute.data.pipe(map(params => params['ingredient']));
-    // this.ingredients = this.slService.getIngredients();
-    // this.activatedRoute.data.subscribe(value => {
-    //     this.ingredients = value['ingredient'];
-    //   },
-    // );
-    // this.slService.ingredientsChanged.subscribe(
-    //   (ingredients: Ingredient[]) => {
-    //     this.ingredients = ingredients;
-    //   },
-    // );
+    // this.ingredients$ = this.activatedRoute.data.pipe(map(params => params['ingredient']));
   }
 
 }

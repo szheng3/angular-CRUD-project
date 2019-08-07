@@ -1,5 +1,5 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {ShoppingListAction} from './shopping-list.actions';
+import {ShoppingListAction, UpdateShoppingListAction} from './shopping-list.actions';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 
 export interface ShoppingListStateModel {
@@ -27,6 +27,19 @@ export class ShoppingListState {
   public add(ctx: StateContext<ShoppingListStateModel>, {payload}: ShoppingListAction) {
     const stateModel = ctx.getState();
     stateModel.items = [...stateModel.items, payload];
-    ctx.setState(stateModel);
+    ctx.setState({...stateModel});
+  }
+
+
+  @Action(UpdateShoppingListAction)
+  public update(ctx: StateContext<ShoppingListStateModel>, {payload}: ShoppingListAction) {
+    const stateModel = ctx.getState();
+    stateModel.items = [...stateModel.items, payload];
+    ctx.patchState({
+      items: [
+        ...ctx.getState().items,
+              ]
+    });
+
   }
 }

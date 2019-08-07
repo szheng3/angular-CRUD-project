@@ -3,7 +3,6 @@
 
 
     <form *ngIf=" (ingredient$ | async) as ingredient" #form="ngForm" (ngSubmit)="onAddItem(form.value)">
-      {{ingredient?.name}}
       <div class="row">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>

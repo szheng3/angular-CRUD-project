@@ -5,6 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import {defaultIfEmpty, delay, map, tap} from 'rxjs/operators';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 import {Observable, of, range, Subject} from 'rxjs';
+import {Store} from '@ngxs/store';
+import {ShoppingListAction} from 'src/app/store/shopping-list/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -19,7 +21,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   isEdit: boolean;
   index: number;
 
-  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute) {
+  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute, private store: Store) {
 
   }
 
@@ -41,10 +43,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  onAddItem(inputForm: { name: string, amount: number }) {
+  onAddItem(inputForm: Ingredient) {
 
     if (!this.isEdit) {
-      this.slService.addIngredient(inputForm);
+      this.store.dispatch(new ShoppingListAction(inputForm));
+      // this.slService.addIngredient(inputForm);
 
     } else {
       this.slService.updateIngredient(this.index, inputForm);
