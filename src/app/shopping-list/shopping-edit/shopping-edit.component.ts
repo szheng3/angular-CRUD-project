@@ -1,19 +1,20 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ShoppingListService} from '../shopping-list.service';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {defaultIfEmpty, delay, map, tap} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {catchError, concatMap, defaultIfEmpty, delay, finalize, map, mergeMap, switchMap, tap} from 'rxjs/operators';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 import {Observable, of, range, Subject} from 'rxjs';
 import {Store} from '@ngxs/store';
-import {ShoppingListAction, UpdateShoppingListAction} from 'src/app/store/shopping-list/shopping-list.actions';
+import {DeleteShoppingListAction, ShoppingListAction, UpdateShoppingListAction} from 'src/app/store/shopping-list/shopping-list.actions';
+import {ShoppingListState} from 'src/app/store/shopping-list/shopping-list.state';
 
 @Component({
   selector: 'app-shopping-edit',
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css'],
 })
-export class ShoppingEditComponent implements OnInit, OnDestroy {
+export class ShoppingEditComponent implements OnInit {
   // @ViewChild('nameInput', { static: false }) nameInputRef: ElementRef;
   // @ViewChild('form', {static: false}) form: NgForm;
 
@@ -21,7 +22,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   isEdit: boolean;
   index: number;
 
-  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute, private store: Store) {
+  constructor(
+    private slService: ShoppingListService, private activatedRoute: ActivatedRoute, private store: Store, private router: Router) {
 
   }
 
@@ -30,14 +32,15 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     this.ingredient$ = this.activatedRoute.params.pipe(
       tap((params) => {
         this.isEdit = params['id'] != null;
-        this.index = +params['id'];
+        if (this.isEdit) {
+          this.index = +params['id'];
+        }
       }),
-      map((params) => +params['id']),
-      map((params) => {
-        if (params != null) {
-          return this.slService.getIngredient(params);
+      mergeMap((params) => {
+        if (params['id']) {
+          return this.store.select(ShoppingListState.getShopping).pipe(map(findOne => findOne(this.index)));
         } else {
-          return {name: '', amount: 0};
+          return of({name: '', amount: 0});
         }
       }),
     );
@@ -58,10 +61,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     form.reset();
   }
 
-  ngOnDestroy(): void {
-  }
-
   delete(form: NgForm) {
+    this.store.dispatch(new DeleteShoppingListAction(this.index));
+    this.router.navigate(['shoppingList']);
   }
 
 }

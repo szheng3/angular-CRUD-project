@@ -12,7 +12,7 @@
             name="name"
             class="form-control"
             required
-            [(ngModel)]="ingredient.name"
+            [ngModel]="ingredient.name"
           >
         </div>
         <div class="col-sm-2 form-group">
@@ -24,7 +24,7 @@
             name="amount"
             class="form-control"
             required
-            [(ngModel)]="ingredient.amount"
+            [ngModel]="ingredient.amount"
 
           >
         </div>
@@ -33,7 +33,7 @@
         <div class="col-xs-12">
           <button *ngIf="!isEdit" class="btn btn-success" type="submit">Add</button>
           <button *ngIf="isEdit" class="btn btn-success" type="submit">update</button>
-          <button class="btn btn-danger" type="button" (click)="delete(form)">Delete</button>
+          <button *ngIf="isEdit" class="btn btn-danger" type="button" (click)="delete(form)">Delete</button>
           <button class="btn btn-primary" type="button" (click)="clear(form)">Clear</button>
         </div>
       </div>

@@ -11,3 +11,9 @@ export class UpdateShoppingListAction {
 
   constructor(public payload: Ingredient, public index: number) { }
 }
+
+export class DeleteShoppingListAction {
+  public static readonly type = '[ShoppingList] Delete item';
+
+  constructor( public index: number) { }
+}

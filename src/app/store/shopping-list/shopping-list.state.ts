@@ -1,5 +1,5 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {ShoppingListAction, UpdateShoppingListAction} from './shopping-list.actions';
+import {DeleteShoppingListAction, ShoppingListAction, UpdateShoppingListAction} from './shopping-list.actions';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 
 export interface ShoppingListStateModel {
@@ -23,6 +23,13 @@ export class ShoppingListState {
     return state.items;
   }
 
+  @Selector()
+  public static getShopping(state: ShoppingListStateModel) {
+    return (index: number) => {
+      return state.items[index];
+    };
+  }
+
   @Action(ShoppingListAction)
   public add(ctx: StateContext<ShoppingListStateModel>, {payload}: ShoppingListAction) {
     const stateModel = ctx.getState();
@@ -37,6 +44,18 @@ export class ShoppingListState {
     ctx.patchState({
       items: [
         ...stateModel.items,
+      ],
+    });
+
+  }
+
+  @Action(DeleteShoppingListAction)
+  public delete(ctx: StateContext<ShoppingListStateModel>, {index}: UpdateShoppingListAction) {
+    const stateModel = ctx.getState();
+    const value = stateModel.items.filter((value, index1) => {if (index1 !== index) {return value; }});
+    ctx.patchState({
+      items: [
+        ...value,
       ],
     });
 
