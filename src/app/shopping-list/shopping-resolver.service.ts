@@ -15,7 +15,7 @@ export class ShoppingResolverService implements Resolve<Ingredient[]> {
   constructor(private shoppingListService: ShoppingListService, private store: Store) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Ingredient[]> | Promise<Ingredient[]> | Ingredient[] {
-    return this.store.select(ShoppingListState.getShoppingList).pipe(take(1), delay(1000));
+    return this.store.select(ShoppingListState.getShoppingList).pipe(take(1));
   }
 
 }

@@ -6,7 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Select, Store} from '@ngxs/store';
 import {ShoppingListState} from 'src/app/store/shopping-list/shopping-list.state';
 import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {delay, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-shopping-list',
@@ -14,11 +14,12 @@ import {map} from 'rxjs/operators';
   styleUrls: ['./shopping-list.component.css'],
 })
 export class ShoppingListComponent implements OnInit {
- @Select(ShoppingListState.getShoppingList)ingredients$: Observable<Ingredient[]>;
+  ingredients$: Observable<Ingredient[]>;
 
-  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute) { }
+  constructor(private slService: ShoppingListService, private activatedRoute: ActivatedRoute, private store: Store) { }
 
   ngOnInit() {
+    this.ingredients$ = this.store.select(ShoppingListState.getShoppingList).pipe(delay(1000));
     // this.ingredients$ = this.activatedRoute.data.pipe(map(params => params['ingredient']));
   }
 
