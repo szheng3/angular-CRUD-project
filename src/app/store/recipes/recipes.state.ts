@@ -1,5 +1,5 @@
 import {State, Action, Selector, StateContext} from '@ngxs/store';
-import {RecipesAction} from './recipes.actions';
+import {RecipesAction, UpdateRecipesAction} from './recipes.actions';
 import {Recipe} from 'src/app/recipes/recipe.model';
 import {Ingredient} from 'src/app/shared/ingredient.model';
 
@@ -35,15 +35,30 @@ export class RecipesState {
   public static getState(state: RecipesStateModel) {
     return state;
   }
+
   @Selector()
   public static getRecipes(state: RecipesStateModel) {
     return state.items;
+  }
+
+  @Selector()
+  public static getRecipe(state: RecipesStateModel) {
+    return (index: number) => {
+      return state.items[index];
+    };
   }
 
   @Action(RecipesAction)
   public add(ctx: StateContext<RecipesStateModel>, {payload}: RecipesAction) {
     const stateModel = ctx.getState();
     stateModel.items = [...stateModel.items, payload];
+    ctx.setState({...stateModel});
+  }
+
+  @Action(UpdateRecipesAction)
+  public update(ctx: StateContext<RecipesStateModel>, {payload, index}: UpdateRecipesAction) {
+    const stateModel = ctx.getState();
+    stateModel.items[index] = payload;
     ctx.setState({...stateModel});
   }
 }

@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {RecipeService} from 'src/app/recipes/recipe.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Recipe} from 'src/app/recipes/recipe.model';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {of} from 'rxjs';
+import {Store} from '@ngxs/store';
+import {RecipesState} from 'src/app/store/recipes/recipes.state';
+import {map} from 'rxjs/operators';
+import {RecipesAction, UpdateRecipesAction} from 'src/app/store/recipes/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -13,10 +17,10 @@ import {of} from 'rxjs';
 export class RecipeEditComponent implements OnInit {
   private recipe = new Recipe('', '', '', []);
   private isEdit = true;
-   form = new FormGroup({});
+  form = new FormGroup({});
   private index: number;
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService, private activatedRoute: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private store: Store, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
@@ -25,7 +29,7 @@ export class RecipeEditComponent implements OnInit {
 
       if (this.isEdit) {
         this.index = +param['id'];
-        this.recipe = this.recipeService.getRecipe(this.index);
+        this.store.select(RecipesState.getRecipe).pipe(map(findOne => findOne(this.index))).subscribe(recipe => this.recipe = recipe);
 
       }
       this.form = this.fb.group(this.recipe);
@@ -36,11 +40,12 @@ export class RecipeEditComponent implements OnInit {
 
   save() {
     if (this.isEdit) {
-      this.recipeService.update(+this.index, this.form.value);
+      this.store.dispatch(new UpdateRecipesAction(this.form.value, this.index));
+      // this.recipeService.update(+this.index, this.form.value);
     } else {
-      this.recipeService.save(this.form.value);
-
+      this.store.dispatch(new RecipesAction(this.form.value));
     }
+    this.router.navigate(['../'], {relativeTo: this.activatedRoute});
 
   }
 
