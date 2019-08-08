@@ -20,6 +20,8 @@ import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {LoadingComponent} from './loading/loading.component';
 import {appState} from 'src/app/store/app.state';
+import {environment} from 'src/environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -42,8 +44,13 @@ import {appState} from 'src/app/store/app.state';
     AppRoutingModule,
     ReactiveFormsModule,
     NgxsModule.forRoot(appState),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot()
+    environment.production
+      ? []
+      : NgxsReduxDevtoolsPluginModule.forRoot(),
+    environment.production
+      ? []
+      : NgxsLoggerPluginModule.forRoot()
+
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent]
