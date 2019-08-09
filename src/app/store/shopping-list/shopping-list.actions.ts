@@ -6,6 +6,12 @@ export class ShoppingListAction {
   constructor(public payload: Ingredient) { }
 }
 
+export class AddShoppingListsAction {
+  public static readonly type = '[ShoppingList] Adds item';
+
+  constructor(public payload: Ingredient[]) { }
+}
+
 export class UpdateShoppingListAction {
   public static readonly type = '[ShoppingList] Update item';
 
