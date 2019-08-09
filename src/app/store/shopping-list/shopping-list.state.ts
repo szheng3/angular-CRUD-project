@@ -20,7 +20,7 @@ export class ShoppingListState {
 
   @Selector()
   public static getShoppingList(state: ShoppingListStateModel) {
-    return state.items;
+    return [...state.items];
   }
 
   @Selector()
@@ -33,13 +33,28 @@ export class ShoppingListState {
   @Action(ShoppingListAction)
   public add(ctx: StateContext<ShoppingListStateModel>, {payload}: ShoppingListAction) {
     const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, payload];
+    const ingredients = stateModel.items;
+    this.addIngredient(payload, stateModel);
     ctx.setState({...stateModel});
   }
+
+  private addIngredient(payload: Ingredient, stateModel: ShoppingListStateModel) {
+    const ingredients = stateModel.items;
+    const index = ingredients.findIndex(value => value.name === payload.name);
+    if (index === -1) {
+      stateModel.items = [...ingredients, payload];
+    } else {
+      ingredients[index].amount += payload.amount;
+    }
+  }
+
   @Action(AddShoppingListsAction)
   public addItems(ctx: StateContext<ShoppingListStateModel>, {payload}: AddShoppingListsAction) {
     const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, ...payload];
+
+    payload.forEach(value => {
+      this.addIngredient(value, stateModel);
+    });
     ctx.setState({...stateModel});
   }
 
