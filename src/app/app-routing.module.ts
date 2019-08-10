@@ -1,48 +1,25 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {RecipesComponent} from 'src/app/recipes/recipes.component';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {ShoppingListComponent} from 'src/app/shopping-list/shopping-list.component';
-import {EmptyComponent} from 'src/app/recipes/empty/empty.component';
-import {RecipeDetailComponent} from 'src/app/recipes/recipe-detail/recipe-detail.component';
-import {RecipeEditComponent} from 'src/app/recipes/recipe-edit/recipe-edit.component';
 import {ShoppingEditComponent} from 'src/app/shopping-list/shopping-edit/shopping-edit.component';
 import {ShoppingResolverService} from 'src/app/shopping-list/shopping-resolver.service';
+import {MainPageComponent} from 'src/app/main-page/main-page.component';
 
 const routes: Routes = [
   {
-    path: 'recipes', component: RecipesComponent, children: [
-      {
-        path: '', component: EmptyComponent,
-      },
-      {
-        path: 'new', component: RecipeEditComponent,
-      },
-      {
-        path: ':id', component: RecipeDetailComponent,
-      },
-      {
-        path: ':id/edit', component: RecipeEditComponent,
-      },
-    ],
+    path: '', component: MainPageComponent,
   },
   {
-    path: 'shoppingList', component: ShoppingListComponent, children: [
-      {
-        path: '', component: ShoppingEditComponent,
-      },
-      {
-        path: ':id', component: ShoppingEditComponent,
-      },
-    ],
-    resolve: {
-      ingredient: ShoppingResolverService,
-    },
+    path: 'recipes', loadChildren: './recipes/recipe.module#RecipeModule',
+  },
+  {
+    path: 'shoppingList', loadChildren: './shopping-list/shoppling-list.module#ShopplingListModule'
   },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

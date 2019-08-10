@@ -1,55 +1,40 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
-import {RecipesComponent} from './recipes/recipes.component';
-import {RecipeListComponent} from './recipes/recipe-list/recipe-list.component';
-import {RecipeDetailComponent} from './recipes/recipe-detail/recipe-detail.component';
-import {RecipeItemComponent} from './recipes/recipe-list/recipe-item/recipe-item.component';
-import {ShoppingListComponent} from './shopping-list/shopping-list.component';
-import {ShoppingEditComponent} from './shopping-list/shopping-edit/shopping-edit.component';
 import {DropdownDirective} from './shared/dropdown.directive';
 import {ShoppingListService} from './shopping-list/shopping-list.service';
 import {AppRoutingModule} from './app-routing.module';
-import {EmptyComponent} from './recipes/empty/empty.component';
-import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import {NgxsModule} from '@ngxs/store';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
 import {LoadingComponent} from './loading/loading.component';
 import {appState} from 'src/app/store/app.state';
 import {environment} from 'src/environments/environment';
-
+import {SharedModule} from 'src/app/shared/shared.module';
+import {MainPageComponent} from './main-page/main-page.component';
+import {ShopplingListModule} from './shopping-list/shoppling-list.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
-    DropdownDirective,
-    EmptyComponent,
-    RecipeEditComponent,
-    LoadingComponent
+    LoadingComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    FormsModule,
+    SharedModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     NgxsModule.forRoot(appState),
     environment.production
       ? []
       : NgxsReduxDevtoolsPluginModule.forRoot(),
     environment.production
       ? []
-      : NgxsLoggerPluginModule.forRoot()
+      : NgxsLoggerPluginModule.forRoot(),
+    ShopplingListModule
 
   ],
   providers: [ShoppingListService],
