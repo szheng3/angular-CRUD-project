@@ -7,6 +7,7 @@ import {RecipesState} from 'src/app/store/recipes/recipes.state';
 import {Observable} from 'rxjs';
 import {Meta, Title} from '@angular/platform-browser';
 import {isPlatformBrowser} from '@angular/common';
+import {RecipesInterface} from 'src/app/recipes/recipes-interface';
 
 @Component({
   selector: 'app-recipe-list',
@@ -14,11 +15,15 @@ import {isPlatformBrowser} from '@angular/common';
   styleUrls: ['./recipe-list.component.css'],
 })
 export class RecipeListComponent implements OnInit {
-  @Select(RecipesState.getRecipes) recipes$: Observable<Recipe[]>;
+  recipes$: Observable<Recipe[]>;
+
   isBrowser: boolean;
 
-  constructor(private recipeService: RecipeService, private title: Title, private meta: Meta,@Inject(PLATFORM_ID) platformId) {
+  constructor(
+    private recipeService: RecipeService, private title: Title, private meta: Meta, @Inject(PLATFORM_ID) platformId,
+    private recipesInterface: RecipesInterface) {
     this.isBrowser = isPlatformBrowser(platformId);
+    this.recipes$ = recipesInterface.getReceips();
   }
 
   ngOnInit() {

@@ -37,7 +37,7 @@ export class RecipesState {
   }
 
   @Selector()
-  public static getRecipes(state: RecipesStateModel) {
+  public static getRecipes(state: RecipesStateModel): Recipe[] {
     return [...state.items];
   }
 

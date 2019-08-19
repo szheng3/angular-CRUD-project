@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
-import {DropdownDirective} from './shared/dropdown.directive';
 import {ShoppingListService} from './shopping-list/shopping-list.service';
 import {AppRoutingModule} from './app-routing.module';
 import {NgxsModule} from '@ngxs/store';
@@ -14,7 +13,6 @@ import {appState} from 'src/app/store/app.state';
 import {environment} from 'src/environments/environment';
 import {SharedModule} from 'src/app/shared/shared.module';
 import {MainPageComponent} from './main-page/main-page.component';
-import {ShopplingListModule} from './shopping-list/shoppling-list.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +32,6 @@ import {ShopplingListModule} from './shopping-list/shoppling-list.module';
     environment.production
       ? []
       : NgxsLoggerPluginModule.forRoot(),
-    ShopplingListModule
 
   ],
   providers: [ShoppingListService],
